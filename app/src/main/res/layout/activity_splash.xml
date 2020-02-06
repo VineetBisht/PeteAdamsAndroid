@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splashbg_layout"
+    android:background="@drawable/splashscreen_layoutline"
     tools:context=".SplashScreen">
 
     <ImageView
@@ -13,7 +13,7 @@
         android:layout_height="711dp"
         android:background="@color/splashImageBackground"
         android:contentDescription="application Logo"
-        android:src="@drawable/ic_main_1"
+        android:src="@drawable/ic_main"
         android:transitionName="logo_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

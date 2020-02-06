@@ -1,6 +1,5 @@
-package com.example.pete;
+package com.example.pete.ui.home;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pete.R;
+
 import java.util.List;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyView> {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyView> {
     private List<String> options;
 
-    MainAdapter(List<String> options) {
+    HomeAdapter(List<String> options) {
         this.options = options;
     }
 
@@ -44,7 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyView> {
                 holder.image.setImageResource(R.mipmap.calendar);
                 break;
 
-                default: Log.e(MainAdapter.class.getName(),"Image Resource Error");
+            default: Log.e(HomeAdapter.class.getName(),"Image Resource Error");
                 break;
         }
     }
