@@ -9,7 +9,19 @@
         android:id="@+id/nav_home"
         android:name="com.example.pete.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_quickFixFragment"
+            app:destination="@id/quickFixFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
+        <action
+            android:id="@+id/action_nav_home_to_costReductionFragment"
+            app:destination="@id/costReductionFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/enterfromright" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_profile"
@@ -28,4 +40,26 @@
         android:name="com.example.pete.ui.about.AboutFragment"
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/quickFixFragment"
+        android:name="com.example.pete.ui.quick_fixes.QuickFixFragment"
+        android:label="fragment_quickfix"
+        tools:layout="@layout/fragment_quickfix" >
+        <action
+            android:id="@+id/action_quickFixFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/costReductionFragment"
+        android:name="com.example.pete.ui.cost_reduction.CostReductionFragment"
+        android:label="fragment_cost_reduction"
+        tools:layout="@layout/fragment_cost_reduction" >
+        <action
+            android:id="@+id/action_costReductionFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/exittoright" />
+    </fragment>
 </navigation>

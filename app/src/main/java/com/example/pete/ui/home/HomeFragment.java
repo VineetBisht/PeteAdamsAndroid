@@ -7,16 +7,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pete.R;
+import com.example.pete.ui.cost_reduction.CostReductionFragment;
+import com.example.pete.ui.quick_fixes.QuickFixFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeAdapter.OptionListener {
 
     RecyclerView recyclerView,recyclerViewDate;
 
@@ -34,7 +38,7 @@ public class HomeFragment extends Fragment {
                 LinearLayoutManager.HORIZONTAL,
                 false);
 
-        HomeAdapter adapter = new HomeAdapter(getOptions());
+        HomeAdapter adapter = new HomeAdapter(getOptions(),this);
         DateAdapter dateAdapter=new DateAdapter(getDateOptions());
 
         recyclerViewDate.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
@@ -63,4 +67,19 @@ public class HomeFragment extends Fragment {
         return options;
     }
 
+    @Override
+    public void onOptionClick(int position) {
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        switch (position){
+            case 0:
+                navController.navigate(R.id.quickFixFragment);
+                break;
+            case 1:
+                navController.navigate(R.id.costReductionFragment);
+                break;
+            case 2:
+                break;
+
+        }
+    }
 }

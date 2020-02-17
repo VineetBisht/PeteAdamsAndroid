@@ -11,14 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pete.R;
+import com.example.pete.ui.quick_fixes.QuickFixAdapter;
 
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyView> {
     private List<String> options;
+    OptionListener mOnCardListener;
 
-    HomeAdapter(List<String> options) {
+    HomeAdapter(List<String> options, OptionListener optionClick) {
         this.options = options;
+        mOnCardListener=optionClick;
     }
 
     @NonNull
@@ -28,7 +31,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyView> {
                 .inflate(R.layout.main_options, parent
                         , false);
 
-        return new MyView(itemView);
+        return new MyView(itemView,mOnCardListener);
     }
 
     @Override
@@ -55,15 +58,27 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyView> {
         return options.size();
     }
 
-    public class MyView extends RecyclerView.ViewHolder {
+    public class MyView extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView card;
         ImageView image;
+        OptionListener option;
 
-        public MyView(View view) {
+        public MyView(View view, OptionListener option) {
             super(view);
             card = (TextView) view.findViewById(R.id.card);
             image = (ImageView) view.findViewById(R.id.option_image);
+            view.setOnClickListener(this);
+            this.option=option;
         }
+
+        @Override
+        public void onClick(View view) {
+            option.onOptionClick(getAdapterPosition());
+        }
+
     }
 
+    public interface OptionListener{
+        void onOptionClick(int position);
+    }
 }
