@@ -17,12 +17,10 @@ import java.util.List;
 public class CostReductionAdapter extends RecyclerView.Adapter<CostReductionAdapter.MyView> {
     private List<String> options;
     private List<String> optionDetails;
-    private ImageView direction;
 
-    public CostReductionAdapter(List<String> options, List<String> optionDetails, ImageView direction) {
+    public CostReductionAdapter(List<String> options, List<String> optionDetails) {
         this.options = options;
         this.optionDetails=optionDetails;
-        this.direction=direction;
      }
 
     @NonNull
@@ -44,7 +42,6 @@ public class CostReductionAdapter extends RecyclerView.Adapter<CostReductionAdap
                 break;
             case 1:
                 holder.image.setImageResource(R.mipmap.drain);
-                direction.setImageResource(R.mipmap.bidirectional);
                 break;
             case 2:
                 holder.image.setImageResource(R.mipmap.door);
@@ -57,7 +54,6 @@ public class CostReductionAdapter extends RecyclerView.Adapter<CostReductionAdap
                 break;
             case 5:
                 holder.image.setImageResource(R.mipmap.chat);
-                direction.setImageResource(R.mipmap.left);
                 break;
 
             default: Log.e(CostReductionAdapter.class.getName(),"Image Resource Error");

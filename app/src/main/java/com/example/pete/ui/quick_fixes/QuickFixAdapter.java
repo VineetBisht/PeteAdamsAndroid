@@ -17,12 +17,10 @@ public class
 QuickFixAdapter extends RecyclerView.Adapter<QuickFixAdapter.MyView> {
     private List<String> options;
     private List<String> optionDetails;
-    ImageView direction;
 
-    QuickFixAdapter(List<String> options, List<String> optionDetails, ImageView direction) {
+    QuickFixAdapter(List<String> options, List<String> optionDetails) {
         this.options = options;
         this.optionDetails=optionDetails;
-        this.direction=direction;
     }
 
     @NonNull
@@ -45,10 +43,8 @@ QuickFixAdapter extends RecyclerView.Adapter<QuickFixAdapter.MyView> {
                 break;
             case 1:
                 holder.image.setImageResource(R.mipmap.plunger);
-                direction.setImageResource(R.mipmap.bidirectional);
                 break;
             case 2:
-                direction.setImageResource(R.mipmap.left);
                 holder.image.setImageResource(R.mipmap.kitchen);
                 break;
 

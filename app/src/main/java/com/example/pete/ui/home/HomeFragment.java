@@ -4,19 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pete.R;
-import com.example.pete.ui.cost_reduction.CostReductionFragment;
-import com.example.pete.ui.quick_fixes.QuickFixFragment;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,11 +42,19 @@ public class HomeFragment extends Fragment implements HomeAdapter.OptionListener
         DateAdapter dateAdapter=new DateAdapter(getDateOptions());
 
         recyclerViewDate.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setLayoutManager(horizontalLayout);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewDate.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         recyclerViewDate.setAdapter(dateAdapter);
+
+        final int radius = getResources().getDimensionPixelSize(R.dimen.radius);
+        final int dotsHeight = getResources().getDimensionPixelSize(R.dimen.dots_height);
+        final int color = ContextCompat.getColor(getContext(), R.color.navyBlue);
+        recyclerView.addItemDecoration(new DotsIndicatorDecoration(radius, radius * 4, dotsHeight, color, color));
+        new PagerSnapHelper().attachToRecyclerView(recyclerView);
 
         return root;
     }
@@ -78,6 +86,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.OptionListener
                 navController.navigate(R.id.costReductionFragment);
                 break;
             case 2:
+                Toast.makeText(getContext() ,"Yet to be implemented", Toast.LENGTH_SHORT).show();
                 break;
 
         }

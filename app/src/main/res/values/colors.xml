@@ -9,4 +9,7 @@
     <color name="splashText">#6D6A5A</color>
     <color name="black">#000000</color>
     <color name="white">#00FFFFFF</color>
+    <color name="navyBlue">#293270</color>
+    <color name="mainRecyclerView">#DAE0DE</color>
+    <color name="scheduleTextColor">#F375A5</color>
 </resources>

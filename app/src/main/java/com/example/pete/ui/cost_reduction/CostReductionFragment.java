@@ -1,5 +1,6 @@
 package com.example.pete.ui.cost_reduction;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 
 import com.example.pete.R;
 import com.example.pete.ui.home.DateAdapter;
+import com.example.pete.ui.home.DotsIndicatorDecoration;
 import com.example.pete.ui.home.HomeAdapter;
 import com.example.pete.ui.quick_fixes.QuickFixAdapter;
 
@@ -39,11 +42,18 @@ public class CostReductionFragment extends Fragment {
                 getContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false);
-        ImageView direction = (ImageView) root.findViewById((R.id.direction));
-
-        CostReductionAdapter adapter = new CostReductionAdapter(getOptions(),getOptionDetails(),direction);
+        CostReductionAdapter adapter = new CostReductionAdapter(getOptions(),getOptionDetails());
 
         recyclerView.setLayoutManager(horizontalLayout);
+
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(true);
+        final int radius = getResources().getDimensionPixelSize(R.dimen.radius);
+        final int dotsHeight = getResources().getDimensionPixelSize(R.dimen.dots_height);
+        final int color = ContextCompat.getColor(getContext(), R.color.navyBlue);
+        recyclerView.addItemDecoration(new DotsIndicatorDecoration(radius, radius * 4, dotsHeight, color, color));
+        new PagerSnapHelper().attachToRecyclerView(recyclerView);
+
         recyclerView.setAdapter(adapter);
 
         return root;
