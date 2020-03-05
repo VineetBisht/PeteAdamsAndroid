@@ -24,35 +24,20 @@
 
     <TextView
         android:id="@+id/SplashName"
-        android:layout_width="159dp"
-        android:layout_height="69dp"
+        android:layout_width="231dp"
+        android:layout_height="68dp"
         android:contentDescription="application Name"
         android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:text="@string/app_name"
-        android:textColor="@color/splashText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/splashText"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/SplashImage"
         app:layout_constraintEnd_toEndOf="@+id/SplashImage"
-        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintHorizontal_bias="0.536"
         app:layout_constraintStart_toStartOf="@+id/SplashImage"
-        app:layout_constraintTop_toTopOf="@+id/SplashImage"
-        app:layout_constraintVertical_bias="0.465" />
+        app:layout_constraintTop_toTopOf="@+id/SplashImage" />
 
-    <TextView
-        android:id="@+id/Caption"
-        android:layout_width="342dp"
-        android:layout_height="29dp"
-        android:contentDescription="application catchphrase"
-        android:textColor="@color/splashText"
-        android:gravity="right"
-        android:text="Helping you deliver better MCD service"
-        app:layout_constraintBottom_toBottomOf="@+id/SplashImage"
-        app:layout_constraintEnd_toEndOf="@+id/SplashImage"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/SplashImage"
-        app:layout_constraintTop_toBottomOf="@+id/SplashName"
-        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

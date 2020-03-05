@@ -1,84 +1,88 @@
 package com.example.pete.ui.home;
 
+import android.content.Context;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.cardview.widget.CardView;
+import androidx.viewpager.widget.PagerAdapter;
 import com.example.pete.R;
-import com.example.pete.ui.quick_fixes.QuickFixAdapter;
-
 import java.util.List;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyView> {
+public class HomeAdapter extends PagerAdapter {
     private List<String> options;
-    OptionListener mOnCardListener;
+    Context context;
+    OnPagerListener onPagerListener;
 
-    HomeAdapter(List<String> options, OptionListener optionClick) {
+    HomeAdapter(List<String> options,  Context context, OnPagerListener onPagerListener) {
         this.options = options;
-        mOnCardListener=optionClick;
-    }
-
-    @NonNull
-    @Override
-    public MyView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.main_options, parent
-                        , false);
-
-        return new MyView(itemView,mOnCardListener);
+        this.context = context;
+        this.onPagerListener=onPagerListener;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyView holder, int position) {
-        holder.card.setText(options.get(position));
-        switch (options.get(position)) {
-            case "Quick Fixes":
-                holder.image.setImageResource(R.mipmap.fix);
-                break;
-            case "Cost Reduction":
-                holder.image.setImageResource(R.mipmap.money);
-                break;
-            case "New Booking":
-                holder.image.setImageResource(R.mipmap.calendar);
-                break;
-
-            default: Log.e(HomeAdapter.class.getName(),"Image Resource Error");
-                break;
-        }
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return options.size();
     }
 
-    public class MyView extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView card;
-        ImageView image;
-        OptionListener option;
-
-        public MyView(View view, OptionListener option) {
-            super(view);
-            card = (TextView) view.findViewById(R.id.card);
-            image = (ImageView) view.findViewById(R.id.option_image);
-            view.setOnClickListener(this);
-            this.option=option;
-        }
-
-        @Override
-        public void onClick(View view) {
-            option.onOptionClick(getAdapterPosition());
-        }
-
+    @Override
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+        return view.equals(object);
     }
 
-    public interface OptionListener{
-        void onOptionClick(int position);
+    @NonNull
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        View itemView = LayoutInflater.from(context)
+                .inflate(R.layout.main_options, container
+                        , false);
+
+        TextView card = itemView.findViewById(R.id.card);
+        final int positionInside=position;
+        ImageView image = itemView.findViewById(R.id.option_image);
+
+        itemView.findViewById(R.id.cardview).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("here","working");
+                onPagerListener.onPagerClick(positionInside);
+
+            }
+        });
+
+        card.setText(options.get(position));
+        switch (options.get(position)) {
+            case "Quick Fixes":
+                image.setImageResource(R.mipmap.fix);
+                break;
+            case "Cost Reduction":
+                image.setImageResource(R.mipmap.money);
+                break;
+            case "New Booking":
+                image.setImageResource(R.mipmap.calendar);
+                break;
+
+            default:
+                Log.e(HomeAdapter.class.getName(), "Image Resource Error");
+                break;
+        }
+        container.addView(itemView, 0);
+        return itemView;
+    }
+
+    public interface OnPagerListener{
+        void onPagerClick(int position);
+    }
+
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+       container.removeView((CardView)object);
     }
 }
+

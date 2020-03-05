@@ -28,13 +28,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class QuickFixFragment extends Fragment{
-    RecyclerView recyclerView,recyclerViewDate;
+    RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_quickfix, container, false);
-        recyclerView = (RecyclerView) root.findViewById(R.id.fixRecyclerview);
+        recyclerView = root.findViewById(R.id.fixRecyclerview);
         LinearLayoutManager horizontalLayout
                 = new LinearLayoutManager(
                 getContext(),

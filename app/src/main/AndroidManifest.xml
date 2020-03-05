@@ -21,8 +21,7 @@
         </activity>
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/Theme.Design.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Design.NoActionBar"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
