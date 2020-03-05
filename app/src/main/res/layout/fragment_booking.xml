@@ -1,109 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:ems="10"
-        android:gravity="left"
-        android:hint="Name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.408"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heading"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        app:layout_constraintVertical_bias="0.0">
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="221dp"
-            android:layout_height="55dp"
-            android:ems="10"
-            android:gravity="center_vertical|center_horizontal"
-            android:hint="Email"
-            android:inputType="textPersonName" />
+    android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
         <EditText
-            android:id="@+id/contact"
-            android:layout_width="189dp"
-            android:layout_height="55dp"
+            android:id="@+id/name"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:ems="10"
+            android:gravity="left"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            android:layout_below="@id/heading" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/name">
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="221dp"
+                android:layout_height="55dp"
+                android:ems="10"
+                android:gravity="center_vertical|center_horizontal"
+                android:hint="Email"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/contact"
+                android:layout_width="189dp"
+                android:layout_height="55dp"
+                android:ems="10"
+                android:gravity="center_vertical|center_horizontal"
+                android:hint="Contact"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
             android:gravity="center_vertical|center_horizontal"
-            android:hint="Contact"
-            android:inputType="number" />
+            android:hint="Search Address"
+            android:inputType="text"
+            android:layout_below="@id/linearLayout2"/>
 
-    </LinearLayout>
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="269dp"
+            android:ems="10"
+            android:gravity="left"
+            android:hint="Description..."
+            android:inputType="text|textMultiLine"
+            android:layout_below="@id/datePicker"/>
 
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:ems="10"
-        android:gravity="center_vertical|center_horizontal"
-        android:hint="Search Address"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/heading"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="New Booking"
+            android:textSize="20dp" />
 
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="269dp"
-        android:ems="10"
-        android:gravity="left"
-        android:hint="Description..."
-        android:inputType="text|textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/heading"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:fontFamily="sans-serif-condensed"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="New Booking"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
-
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description"
-        app:layout_constraintVertical_bias="0.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="67dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:layout_below="@id/address"/>
+</RelativeLayout>
