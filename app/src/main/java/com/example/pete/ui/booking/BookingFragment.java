@@ -1,27 +1,41 @@
 package com.example.pete.ui.booking;
 
-import android.app.Activity;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.pete.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 
-public class BookingFragment extends Fragment implements View.OnKeyListener
-{
+import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.util.List;
+
+public class BookingFragment extends Fragment implements View.OnKeyListener, OnMapReadyCallback {
+
+    GoogleMap gmap;
     EditText name, contact, email, description;
     AutoCompleteTextView address;
     DatePicker datePicker;
@@ -36,8 +50,8 @@ public class BookingFragment extends Fragment implements View.OnKeyListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_booking, container, false);
-        error=false;
-        PhoneNumberFormattingTextWatcher contactWatcher=new PhoneNumberFormattingTextWatcher();
+        error = false;
+        PhoneNumberFormattingTextWatcher contactWatcher = new PhoneNumberFormattingTextWatcher();
         name = root.findViewById(R.id.name);
         address = root.findViewById(R.id.address);
         contact = root.findViewById(R.id.contact);
@@ -45,21 +59,43 @@ public class BookingFragment extends Fragment implements View.OnKeyListener
         description = root.findViewById(R.id.description);
         datePicker = root.findViewById(R.id.datePicker);
         mapView = root.findViewById(R.id.mapView);
-
         name.setOnKeyListener(this);
-        address.setOnKeyListener(this);
-        address.setAdapter(new PlaceAutoSuggestAdapter(getContext(),android.R.layout.simple_list_item_1));
-
         contact.setOnKeyListener(this);
         email.setOnKeyListener(this);
+        address.setOnKeyListener(this);
+
+        if(mapView!=null) {
+            mapView.onCreate(null);
+            mapView.onResume();
+            mapView.getMapAsync(this);
+        }
+
+        address.setAdapter(new PlaceAutoSuggestAdapter(getContext(), android.R.layout.simple_list_item_1));
+        address.setOnKeyListener(new View.OnKeyListener() {
+                                     @Override
+                                     public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                                         TextView view = (TextView) v;
+                                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                                             Log.i("here2", "pressed");
+
+                                             Double addLoc[] = getLatitudeAndLongitude(view.getText().toString());
+                                             LatLng ny = new LatLng(addLoc[0], addLoc[1]);
+                                             gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+                                             InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                             in.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+                                         }
+                                         return false;
+                                     }
+                                 });
 
         contact.addTextChangedListener(contactWatcher);
-
-        if(contact.getText().toString().toCharArray().length!=10) {
+        if (contact.getText().toString().toCharArray().length != 10) {
             contact.setError("Invalid Contact");
-            error=true;
-        }
-        else{
+            error = true;
+        } else {
             contact.setError(null);
             error = false;
         }
@@ -69,10 +105,10 @@ public class BookingFragment extends Fragment implements View.OnKeyListener
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if (!emailtext.matches(emailPattern)) {
             email.setError("Invalid email");
-            error=true;
-        }else{
+            error = true;
+        } else {
             email.setError(null);
-            error=false;
+            error = false;
         }
         return root;
     }
@@ -96,6 +132,32 @@ public class BookingFragment extends Fragment implements View.OnKeyListener
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        MapsInitializer.initialize(getContext());
+
+        gmap = googleMap;
+        gmap.setMinZoomPreference(10);
+        LatLng ny = new LatLng(40.7143528, -74.0059731);
+        gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+    }
+
+    private Double[] getLatitudeAndLongitude(String address) {
+        Geocoder geocoder = new Geocoder(getContext());
+        List<Address> addresses;
+        double latitude = 0, longitude = 0;
+        try {
+            addresses = geocoder.getFromLocationName(address, 1);
+            Address addr = addresses.get(0);
+            latitude = addr.getLatitude();
+            longitude = addr.getLongitude();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.i("here",latitude+""+longitude);
+        return new Double[]{latitude, longitude};
     }
 }
 
