@@ -1,11 +1,16 @@
 package com.example.pete.ui.booking;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
@@ -16,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +33,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.w3c.dom.Text;
 
@@ -35,12 +42,15 @@ import java.util.List;
 
 public class BookingFragment extends Fragment implements View.OnKeyListener, OnMapReadyCallback {
 
-    GoogleMap gmap;
-    EditText name, contact, email, description;
+    private String KEY="saved";
+
+    private GoogleMap gmap;
+    EditText name, contact, email;
     AutoCompleteTextView address;
-    DatePicker datePicker;
+    Button save;
     MapView mapView;
     boolean error;
+    private BookingDBHelper dbHelper;
 
     public BookingFragment() {
         // Required empty public constructor
@@ -56,13 +66,14 @@ public class BookingFragment extends Fragment implements View.OnKeyListener, OnM
         address = root.findViewById(R.id.address);
         contact = root.findViewById(R.id.contact);
         email = root.findViewById(R.id.email);
-        description = root.findViewById(R.id.description);
-        datePicker = root.findViewById(R.id.datePicker);
         mapView = root.findViewById(R.id.mapView);
         name.setOnKeyListener(this);
         contact.setOnKeyListener(this);
         email.setOnKeyListener(this);
         address.setOnKeyListener(this);
+        save = root.findViewById(R.id.save);
+
+        dbHelper = new BookingDBHelper(getContext());
 
         if(mapView!=null) {
             mapView.onCreate(null);
@@ -78,10 +89,10 @@ public class BookingFragment extends Fragment implements View.OnKeyListener, OnM
                                          TextView view = (TextView) v;
                                          if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                                  (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                                             Log.i("here2", "pressed");
 
                                              Double addLoc[] = getLatitudeAndLongitude(view.getText().toString());
                                              LatLng ny = new LatLng(addLoc[0], addLoc[1]);
+                                             gmap.addMarker(new MarkerOptions().position(ny)).setTitle(view.getText().toString());
                                              gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
                                              InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                                              in.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -99,7 +110,26 @@ public class BookingFragment extends Fragment implements View.OnKeyListener, OnM
             contact.setError(null);
             error = false;
         }
-        datePicker.setMinDate(System.currentTimeMillis() - 1000);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if(error==false){
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                ContentValues values = new ContentValues();
+                values.put(Contract.COLUMN_NAME_NAME, name.getText().toString());
+                values.put(Contract.COLUMN_NAME_EMAIL, email.getText().toString());
+                values.put(Contract.COLUMN_NAME_CONTACT, contact.getText().toString());
+                values.put(Contract.COLUMN_NAME_ADDRESS, address.getText().toString());
+                long newRowId = db.insert(Contract.TABLE_NAME, null, values);
+
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                        navController.navigate(R.id.bookingMain);
+                Log.i(this.getClass().getName(),"Successfull! "+ newRowId);
+            }
+            }
+        });
 
         String emailtext = email.getText().toString().trim();
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -139,7 +169,7 @@ public class BookingFragment extends Fragment implements View.OnKeyListener, OnM
         MapsInitializer.initialize(getContext());
 
         gmap = googleMap;
-        gmap.setMinZoomPreference(10);
+        gmap.setMinZoomPreference(15);
         LatLng ny = new LatLng(40.7143528, -74.0059731);
         gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
     }
@@ -156,7 +186,6 @@ public class BookingFragment extends Fragment implements View.OnKeyListener, OnM
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.i("here",latitude+""+longitude);
         return new Double[]{latitude, longitude};
     }
 }

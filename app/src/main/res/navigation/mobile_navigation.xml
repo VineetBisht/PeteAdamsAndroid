@@ -22,8 +22,8 @@
             app:exitAnim="@anim/fragment_fade_exit"
             app:popEnterAnim="@anim/enterfromright" />
         <action
-            android:id="@+id/action_nav_home_to_bookingFragment"
-            app:destination="@id/bookingFragment" />
+            android:id="@+id/action_nav_home_to_bookingMain"
+            app:destination="@id/bookingMain" />
     </fragment>
 
     <fragment
@@ -68,9 +68,13 @@
     <fragment
         android:id="@+id/bookingFragment"
         android:name="com.example.pete.ui.booking.BookingFragment"
-        android:label="BookingFragment" >
+        android:label="BookingFragment" />
+    <fragment
+        android:id="@+id/bookingMain"
+        android:name="com.example.pete.ui.booking.BookingMain"
+        android:label="BookingMain" >
         <action
-            android:id="@+id/action_bookingFragment_to_nav_home"
+            android:id="@+id/action_bookingMain_to_nav_home"
             app:destination="@id/nav_home" />
     </fragment>
 </navigation>

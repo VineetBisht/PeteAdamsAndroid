@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/listname"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Name"
+        android:textSize="20dp"></TextView>
+
+    <LinearLayout
+        android:id="@+id/listecon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/listname">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:id="@+id/listemail"
+            android:layout_below="@id/listname"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Email"
+            android:textSize="20dp"></TextView>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/listcontact"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Contact"
+            android:textSize="20dp"></TextView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/listaddress"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_below="@id/listecon"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Address"
+        android:textSize="20dp"></TextView>
+
+</RelativeLayout>

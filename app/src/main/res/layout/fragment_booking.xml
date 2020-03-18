@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    android:layout_height="match_parent"
-        android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/name"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:ems="10"
-            android:gravity="left"
-            android:hint="Name"
-            android:inputType="textPersonName"
-            android:layout_below="@id/heading" />
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_below="@id/heading"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:gravity="left"
+        android:hint="Name"
+        android:inputType="textPersonName" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -26,16 +26,17 @@
 
         <EditText
             android:id="@+id/email"
-            android:layout_width="221dp"
+            android:layout_width="0dp"
             android:layout_height="55dp"
+            android:layout_weight="1"
             android:ems="10"
             android:gravity="left"
             android:hint="Email"
             android:inputType="textPersonName" />
-
         <EditText
             android:id="@+id/contact"
-            android:layout_width="187dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_marginTop="4dp"
             android:ems="10"
@@ -46,51 +47,44 @@
 
     </LinearLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="63dp"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:gravity="left"
-            android:hint="Search Address"
-            android:inputType="text"
-            android:layout_below="@id/linearLayout2"/>
+    <AutoCompleteTextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_below="@id/linearLayout2"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:gravity="left"
+        android:hint="Search Address"
+        android:inputType="text" />
 
-        <EditText
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="269dp"
-            android:ems="10"
-            android:gravity="left"
-            android:hint="Description..."
-            android:inputType="text|textMultiLine"
-            android:layout_below="@id/datePicker"/>
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/heading">
 
         <TextView
-            android:layout_marginTop="10dp"
-            android:id="@+id/heading"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="42dp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="New Booking"
+            android:fontFamily="sans-serif-black"
+            android:text="New Address"
             android:textSize="20dp" />
-
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="67dp"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            android:layout_below="@id/mapView"/>
+       <View
+           android:layout_width="0dp"
+           android:layout_height="0dp"
+           android:layout_weight="1" />
+       <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Save"
+            android:id="@+id/save"/>
+    </LinearLayout>
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="124dp"
-        android:inputType="textNoSuggestions"
-        android:layout_below="@id/address" />
+        android:layout_height="364dp"
+        android:layout_below="@id/address"
+        android:inputType="textNoSuggestions" />
 </RelativeLayout>

@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnPagerListene
                         navController.navigate(R.id.costReductionFragment);
                         break;
                     case 2:
-                        navController.navigate(R.id.bookingFragment);
+                        navController.navigate(R.id.bookingMain);
                         break;
                 }
     }
