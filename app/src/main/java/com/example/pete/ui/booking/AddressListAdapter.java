@@ -20,22 +20,22 @@ public class AddressListAdapter extends CursorAdapter {
     // you don't bind any data to the view at this point.
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.list_layout, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.date_options, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         // Find fields to populate in inflated template
-        TextView listname = (TextView) view.findViewById(R.id.listname);
-        TextView listcontact = (TextView) view.findViewById(R.id.listcontact);
-        TextView listaddress = (TextView) view.findViewById(R.id.listaddress);
-        TextView listemail = (TextView) view.findViewById(R.id.listemail);
+        TextView listname = view.findViewById(R.id.listname);
+        TextView listcontact = view.findViewById(R.id.listcontact);
+        TextView listaddress = view.findViewById(R.id.listaddress);
+        TextView listemail = view.findViewById(R.id.listemail);
 
         // Extract properties from cursor
-        String name = cursor.getString(cursor.getColumnIndexOrThrow(Contract.COLUMN_NAME_NAME));
-        String email = cursor.getString(cursor.getColumnIndexOrThrow(Contract.COLUMN_NAME_EMAIL));
-        String contact = cursor.getString(cursor.getColumnIndexOrThrow(Contract.COLUMN_NAME_CONTACT));
-        String address = cursor.getString(cursor.getColumnIndexOrThrow(Contract.COLUMN_NAME_ADDRESS));
+        String name = cursor.getString(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_NAME_NAME));
+        String email = cursor.getString(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_NAME_EMAIL));
+        String contact = cursor.getString(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_NAME_CONTACT));
+        String address = cursor.getString(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_NAME_ADDRESS));
         // Populate fields with extracted properties
         listname.setText(name);
         listcontact.setText(contact);

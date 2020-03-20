@@ -2,7 +2,6 @@ package com.example.pete.ui.booking;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,11 +17,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -34,8 +31,6 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,7 +45,7 @@ public class BookingFragment extends Fragment implements View.OnKeyListener, OnM
     Button save;
     MapView mapView;
     boolean error;
-    private BookingDBHelper dbHelper;
+    private AddressDBHelper dbHelper;
 
     public BookingFragment() {
         // Required empty public constructor
@@ -73,7 +68,7 @@ public class BookingFragment extends Fragment implements View.OnKeyListener, OnM
         address.setOnKeyListener(this);
         save = root.findViewById(R.id.save);
 
-        dbHelper = new BookingDBHelper(getContext());
+        dbHelper = new AddressDBHelper(getContext());
 
         if(mapView!=null) {
             mapView.onCreate(null);
@@ -118,15 +113,15 @@ public class BookingFragment extends Fragment implements View.OnKeyListener, OnM
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 ContentValues values = new ContentValues();
-                values.put(Contract.COLUMN_NAME_NAME, name.getText().toString());
-                values.put(Contract.COLUMN_NAME_EMAIL, email.getText().toString());
-                values.put(Contract.COLUMN_NAME_CONTACT, contact.getText().toString());
-                values.put(Contract.COLUMN_NAME_ADDRESS, address.getText().toString());
-                long newRowId = db.insert(Contract.TABLE_NAME, null, values);
+                values.put(AddressContract.COLUMN_NAME_NAME, name.getText().toString());
+                values.put(AddressContract.COLUMN_NAME_EMAIL, email.getText().toString());
+                values.put(AddressContract.COLUMN_NAME_CONTACT, contact.getText().toString());
+                values.put(AddressContract.COLUMN_NAME_ADDRESS, address.getText().toString());
+                long newRowId = db.insert(AddressContract.TABLE_NAME, null, values);
 
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                         navController.navigate(R.id.bookingMain);
-                Log.i(this.getClass().getName(),"Successfull! "+ newRowId);
+                Log.i(this.getClass().getName(),"Written "+ newRowId+" lines into database.");
             }
             }
         });

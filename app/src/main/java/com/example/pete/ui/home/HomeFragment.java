@@ -1,15 +1,17 @@
 package com.example.pete.ui.home;
 
 import android.animation.ArgbEvaluator;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,25 +19,24 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pete.R;
+import com.example.pete.ui.booking.BookingContract;
+import com.example.pete.ui.booking.BookingDBHelper;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HomeFragment extends Fragment implements HomeAdapter.OnPagerListener{
 
-    RecyclerView recyclerViewDate;
     ViewPager viewPager;
     LinearLayout sliderDots;
     ArgbEvaluator argbEvaluator;
+    ListView bookinglist;
     private int dots_count;
     private ImageView[] dots;
-
+    BookingDBHelper dbHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnPagerListene
         argbEvaluator = new ArgbEvaluator();
 
         viewPager = root.findViewById(R.id.viewPager);
-        recyclerViewDate = (RecyclerView) root.findViewById(R.id.recyclerviewDate);
+        bookinglist = root.findViewById(R.id.bookinglist);
 
         LinearLayoutManager horizontalLayout
                 = new LinearLayoutManager(
@@ -53,11 +54,8 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnPagerListene
                 false);
 
         HomeAdapter adapter = new HomeAdapter(getOptions(), getContext(),this);
-        DateAdapter dateAdapter=new DateAdapter(getDateOptions());
 
-        recyclerViewDate.setLayoutManager(new LinearLayoutManager(getContext()));
         viewPager.setAdapter(adapter);
-        recyclerViewDate.setAdapter(dateAdapter);
 
         viewPager.setClipToPadding(false);
         viewPager.setOffscreenPageLimit(2);
@@ -136,12 +134,33 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnPagerListene
         return options;
     }
 
-    public static HashMap<Integer,String> getDateOptions() {
-        HashMap<Integer,String> options = new HashMap<>();
-        options.put(1,"10 Jan, 2020");
-        options.put(2,"12 Feb, 2020");
-        options.put(3,"25 Mar, 2020");
-        return options;
+    private void updateList() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                BaseColumns._ID,
+                BookingContract.COLUMN_NAME_NAME,
+                BookingContract.COLUMN_NAME_DATE,
+                BookingContract.COLUMN_NAME_ADDRESS
+        };
+
+        String sortOrder = BookingContract.COLUMN_NAME_NAME + " ASC";
+
+        Cursor cursor = db.query(
+                BookingContract.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+
+        com.example.pete.home.booking.BookingListAdapter addressAdapter = new com.example.pete.home.booking.BookingListAdapter(this.getContext(), cursor);
+
+        // Attach cursor adapter to the ListView
+        bookinglist.setAdapter(addressAdapter);
+        cursor.close();
     }
 
     @Override

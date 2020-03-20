@@ -15,7 +15,8 @@
         android:id="@+id/listecon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/listname">
+        android:layout_below="@id/listname"
+        android:weightSum="2">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,12 +25,8 @@
             android:layout_below="@id/listname"
             android:fontFamily="sans-serif-condensed"
             android:text="Email"
-            android:textSize="20dp"></TextView>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:textSize="20dp"
+            android:layout_weight="1"></TextView>
 
         <TextView
             android:id="@+id/listcontact"
@@ -37,12 +34,13 @@
             android:layout_height="42dp"
             android:fontFamily="sans-serif-condensed"
             android:text="Contact"
-            android:textSize="20dp"></TextView>
+            android:textSize="20dp"
+            android:layout_weight="1"></TextView>
     </LinearLayout>
 
     <TextView
         android:id="@+id/listaddress"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_below="@id/listecon"
         android:fontFamily="sans-serif-condensed"

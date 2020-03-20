@@ -78,8 +78,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerviewDate"
+    <ListView
+        android:id="@+id/bookinglist"
         android:layout_width="349dp"
         android:layout_height="249dp"
         android:layout_margin="10dp"
