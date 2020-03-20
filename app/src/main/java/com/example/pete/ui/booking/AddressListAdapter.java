@@ -20,7 +20,7 @@ public class AddressListAdapter extends CursorAdapter {
     // you don't bind any data to the view at this point.
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.date_options, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.list_layout, parent, false);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class AddressListAdapter extends CursorAdapter {
         TextView listname = view.findViewById(R.id.listname);
         TextView listcontact = view.findViewById(R.id.listcontact);
         TextView listaddress = view.findViewById(R.id.listaddress);
-        TextView listemail = view.findViewById(R.id.listemail);
+        TextView listemail =  view.findViewById(R.id.listemail);
 
         // Extract properties from cursor
         String name = cursor.getString(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_NAME_NAME));
